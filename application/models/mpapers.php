@@ -34,17 +34,32 @@ class MPapers extends CI_Model {
         return $data;
     }
 
-    public function getPapersByCategory($cid)
+    public function getPaperById($id)
     {
         $sql = "";
         $sql .= "
             select
-            *
+                p.id   id,
+                p.name title,
+                p.answer_minutes answer_minutes,
+                p.pass_score pass_score,
+                p.create_time create_time,
+                p.is_effect is_effect,
+                (select name from categories where id = p.category_id) category,
+                p.category_id category_id,
+                sum(q.score) total_score,
+                count(q.id) total_questions,
+                count(s.id) sessions_count
             from
-                papers
-                where category_id = ?
+                papers p
+                left join question q
+                on q.paper_id = p.id
+                left join sessions s
+                on s.paper_id = p.id
+            where
+                id = ?
         ";
-        $query = $this->db->query($sql, array($cid));
+        $query = $this->db->query($sql, $id);
         $data = array();
         if($query->num_rows() > 0){
             foreach ($query->result() as $key => $val) {
@@ -58,7 +73,7 @@ class MPapers extends CI_Model {
 
     public function update($data, $where)
     {
-        $update_sql = $this->db->update_string("papers", $data, $where);
+        $update_sql = $this->db->update_string("categories", $data, $where);
 
         $result = $this->db->query($update_sql);
 
@@ -71,7 +86,7 @@ class MPapers extends CI_Model {
 
     public function add($data)
     {
-        $sql = $this->db->insert_string('papers', $data);
+        $sql = $this->db->insert_string('categories', $data);
         $result = $this->db->query($sql);
 
         if($result === true) {

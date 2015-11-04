@@ -37,6 +37,8 @@
     <script src="/assets/libs/respond.min.js"></script>
     <![endif]-->
 
+    <!-- jQuery -->
+    <script src="/assets/bower_components/jquery/dist/jquery.min.js"></script>
 </head>
 
 <body>
@@ -60,13 +62,13 @@
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">
                     <li>
-                        <a href="<?php echo site_url('backend/categories_management') ?>"><i class="fa fa-table fa-fw"></i></i> 试题类别管理</a>
+                        <a href="<?php echo site_url('category/categories_management') ?>"><i class="fa fa-table fa-fw"></i></i> 试题类别管理</a>
                     </li>
                     <li>
-                        <a href="<?php echo site_url('backend/papers_management')?>"><i class="fa fa-edit fa-fw"></i> 试题管理</a>
+                        <a href="<?php echo site_url('paper/papers_list')?>"><i class="fa fa-edit fa-fw"></i> 试题管理</a>
                     </li>
                     <li>
-                        <a href="<?php echo site_url('backend/papers_add')?>"><i class="fa fa-files-o fa-fw"></i> 新增试题</a>
+                        <a href="<?php echo site_url('paper/paper_add')?>"><i class="fa fa-files-o fa-fw"></i> 新增试题</a>
                     </li>
                     <li>
                         <a href="<?php echo site_url('backend/report_sessions')?>"><i class="fa fa-bar-chart-o fa-fw"></i> 考生与成绩</a>
