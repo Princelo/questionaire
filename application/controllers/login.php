@@ -26,6 +26,7 @@ class Login extends CI_Controller {
             ));
         $row = $query->row();
         if ($row > 0) {
+            $this->session->set_userdata('is_admin', 1);
             redirect('backend/categories_management');
         } else {
             $this->session->set_flashdata('flashdata', array(

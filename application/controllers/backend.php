@@ -17,7 +17,7 @@ class Backend extends CI_Controller {
 
     public function categories_management()
     {
-        $this->load->model('MCategories', 'MCategoires');
+        $this->load->model('MCategories', 'MCategories');
         $categories = $this->MCategories->getCategories();
         $roots = array();
         foreach ($categories as $k => $v) {

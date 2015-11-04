@@ -29,7 +29,7 @@
                         <h1 class="title">管理员登录</h1>
                         <h2 class=""></h2>
                         <p style="width:100%; text-align:center; color:#f00;">
-                            <?php if($this->session->flashdata('flash_data') != null) {echo $this->session->flash_data('flash_data')['message'];}?>
+                            <?php if($this->session->flashdata('flashdata') != null) {$f = $this->session->flashdata('flashdata');echo $f['message'];}?>
                         </p>
 
 
