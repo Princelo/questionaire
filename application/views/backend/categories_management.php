@@ -6,6 +6,22 @@
         </div>
         <!-- /.col-lg-12 -->
     </div>
+    <?php if(!empty($this->session->flashdata('flashdata'))) { ?>
+    <?php $f = $this->flashdata('flashdata'); ?>
+    <?php if($f['state'] == 'success') {?>
+    <div class="alert alert-success">
+        <?php echo $f['message']; ?>
+    </div>
+    <?php } elseif ( $f['state'] == 'error' ) { ?>
+    <div class="alert alert-danger">
+        <?php echo $f['message']; ?>
+    </div>
+    <?php } ?>
+    <?php } ?>
+    <div class="alert alert-success" id="success-bar" style="display:none;">
+    </div>
+    <div class="alert alert-danger" id="error-bar" style="display: none;">
+    </div>
     <!-- /.row -->
     <div class="row">
         <div class="col-lg-12">
@@ -17,6 +33,8 @@
                 <div class="panel-body">
                     <script>
                         var update_category = function (cid) {
+                            $('#success-bar').fadeOut();
+                            $('#error-bar').fadeOut();
                             $('#input'+cid).prop('disabled', false);
                             $('#button'+cid).prop('disabled', true);
                             $.ajax({
@@ -30,6 +48,14 @@
                                     if (response.state == 'success') {
                                         $('#input'+cid).val(response.value);
                                         $('#button'+cid).prop('disabled', false);
+                                        $('#success-bar').html(response.message);
+                                        $('#success-bar').fadeIn();
+                                        setTimeout(function(){$('#success-bar').fadeOut()}, 1000)
+                                    } else {
+                                        $('#button'+cid).prop('disabled', false);
+                                        $('#error-bar').html(response.message);
+                                        $('#error-bar').fadeIn();
+                                        setTimeout(function(){$('#error-bar').fadeOut()}, 1000)
                                     }
                                 }
                             });
@@ -39,20 +65,22 @@
                     <?php foreach($roots as $l) {?>
                         <li class="list-group-item">
                             <input value="<?php echo $l->name;?>" id="input<?php echo $l->id?>"/>
-                            <button onclick="update_category(<?php echo $l->id?>)" id="button<?php echo $l->id?>">修改名称</button>
-                            <a href="<?php echo site_url('backend/papers_list')?>?cid=<?php echo $l->id?>">查看试题</a>
-                            <a href="javascript:void(0);" data-toggle="modal" data-target="#myModal<?php echo $l->id?>">添加子类別</a>
+                            <button onclick="update_category(<?php echo $l->id?>)" id="button<?php echo $l->id?>" class="btn btn-primary">修改名称</button>
+                            <a href="<?php echo site_url('backend/papers_list')?>?cid=<?php echo $l->id?>" class="btn">查看试题</a>
+                            <a href="javascript:void(0);" data-toggle="modal" data-target="#myModal<?php echo $l->id?>" class="btn">添加子类別</a>
+                            <a href="<?php echo site_url('backend/category_delete');?>?id=<?php echo $l->id; ?>" class="btn btn-danger">删除</a>
                             <!-- Modal -->
                             <div class="modal fade" id="myModal<?php echo $l->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                            <h4 class="modal-title" id="myModalLabel">添加子类别</h4>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="<?php echo site_url('backend/category_add')?>?pid=<?php echo $l->id?>" type="post" id="form<?php echo $l->id?>">
-                                                <input name="name" value="" placeholder="试题类别名"/>
+                                            <form action="<?php echo site_url('backend/category_add')?>" method="post" id="form<?php echo $l->id?>">
+                                                <input name="name" value="" placeholder="试题类别名" class="form-control"/>
+                                                <input name="pid" value="<?php echo $l->id ?>" type="hidden" />
                                             </form>
                                         </div>
                                         <div class="modal-footer">
@@ -69,21 +97,23 @@
                                 <ul class="list-group">
                                     <?php foreach($l->roots as $l) {?>
                                         <li class="list-group-item">
-                                            <input value="<?php echo $l->name;?>" id="input<?php echo $l->id?>"/>
-                                            <button onclick="update_category(<?php echo $l->id?>)" id="button<?php echo $l->id?>">修改名称</button>
-                                            <a href="<?php echo site_url('backend/papers_list')?>?cid=<?php echo $l->id?>">查看试题</a>
-                                            <a href="javascript:void(0);" data-toggle="modal" data-target="#myModal<?php echo $l->id?>">添加子类別</a>
+                                            <input value="<?php echo $l->name;?>" id="input<?php echo $l->id?>" class="form-control"/>
+                                            <button onclick="update_category(<?php echo $l->id?>)" id="button<?php echo $l->id?>" class="btn btn-primary">修改名称</button>
+                                            <a href="<?php echo site_url('backend/papers_list')?>?cid=<?php echo $l->id?>" class="btn">查看试题</a>
+                                            <a href="javascript:void(0);" data-toggle="modal" data-target="#myModal<?php echo $l->id?>" class="btn">添加子类別</a>
+                                            <a href="<?php echo site_url('backend/category_delete');?>?id=<?php echo $l->id; ?>" class="btn btn-danger">删除</a>
                                             <!-- Modal -->
                                             <div class="modal fade" id="myModal<?php echo $l->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                                            <h4 class="modal-title" id="myModalLabel">添加子类别</h4>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <form action="<?php echo site_url('backend/category_add')?>?pid=<?php echo $l->id?>" type="post" id="form<?php echo $l->id?>">
-                                                                <input name="name" value="" placeholder="试题类别名"/>
+                                                            <form action="<?php echo site_url('backend/category_add')?>" method="post" id="form<?php echo $l->id?>">
+                                                                <input name="name" value="" placeholder="试题类别名" class="form-control"/>
+                                                                <input name="pid" value="<?php echo $l->id ?>" type="hidden" />
                                                             </form>
                                                         </div>
                                                         <div class="modal-footer">
@@ -101,8 +131,8 @@
                                                     <?php foreach($l->roots as $l) {?>
                                                         <li class="list-group-item">
                                                             <input value="<?php echo $l->name;?>" id="input<?php echo $l->id?>"/>
-                                                            <button onclick="update_category(<?php echo $l->id?>)" id="button<?php echo $l->id?>">修改名称</button>
-                                                            <a href="<?php echo site_url('backend/papers_list')?>?cid=<?php echo $l->id?>">查看试题</a>
+                                                            <button onclick="update_category(<?php echo $l->id?>)" id="button<?php echo $l->id?>" class="btn btn-primary">修改名称</button>
+                                                            <a href="<?php echo site_url('backend/papers_list')?>?cid=<?php echo $l->id?>" class="btn">查看试题</a>
                                                         </li>
                                                     <?php } ?>
                                                 </ul>
@@ -129,8 +159,8 @@
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                     <form action="<?php echo site_url('backend/category_add')?>" method="post">
-                        <input name="name" value="" />
-                        <input type="submit" value="提交" />
+                        <input name="name" value="" class="form-control"/>
+                        <input type="submit" value="提交" class="btn btn-primary"/>
                     </form>
                 </div>
             </div>

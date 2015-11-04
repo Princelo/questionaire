@@ -12,16 +12,14 @@ class MCategories extends CI_Model {
         parent::__construct();
     }
 
-    public function getCategoires()
+    public function getCategories()
     {
         $sql = "";
         $sql .= "
             select
             *
             from
-                categories c,
-                categories sc
-            where c.pid is null
+                categories
             ;
         ";
         $query = $this->db->query($sql);
