@@ -593,3 +593,34 @@ if ( ! function_exists('_parse_attributes'))
 
 /* End of file url_helper.php */
 /* Location: ./system/helpers/url_helper.php */
+	function convert_option_no ($option_no)
+	{
+		$return = '';
+		switch(intval($option_no)) {
+			case 1:
+				$return = 'A';
+				break;
+			case 2:
+				$return = 'B';
+				break;
+			case 3:
+				$return = 'C';
+				break;
+			case 4:
+				$return = 'D';
+				break;
+			case 5:
+				$return = 'E';
+				break;
+			case 6:
+				$return = 'F';
+				break;
+			case 7:
+				$return = 'G';
+				break;
+			default:
+				$return = 'ERROR';
+				break;
+		}
+		return $return;
+	}

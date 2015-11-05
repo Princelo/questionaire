@@ -5,21 +5,21 @@
  * Date: 11/4/15
  * Time: 19:41
  */
-class MPapers extends CI_Model {
+class MCategories extends CI_Model {
 
     function __construct()
     {
         parent::__construct();
     }
 
-    public function getPapers()
+    public function getCategories()
     {
         $sql = "";
         $sql .= "
             select
             *
             from
-                papers
+                categories
             ;
         ";
         $query = $this->db->query($sql);
@@ -34,31 +34,9 @@ class MPapers extends CI_Model {
         return $data;
     }
 
-    public function getPapersByCategory($cid)
-    {
-        $sql = "";
-        $sql .= "
-            select
-            *
-            from
-                papers
-                where category_id = ?
-        ";
-        $query = $this->db->query($sql, array($cid));
-        $data = array();
-        if($query->num_rows() > 0){
-            foreach ($query->result() as $key => $val) {
-                $data[] = $val;
-            }
-        }
-        $query->free_result();
-
-        return $data;
-    }
-
     public function update($data, $where)
     {
-        $update_sql = $this->db->update_string("papers", $data, $where);
+        $update_sql = $this->db->update_string("categories", $data, $where);
 
         $result = $this->db->query($update_sql);
 
@@ -71,7 +49,7 @@ class MPapers extends CI_Model {
 
     public function add($data)
     {
-        $sql = $this->db->insert_string('papers', $data);
+        $sql = $this->db->insert_string('categories', $data);
         $result = $this->db->query($sql);
 
         if($result === true) {

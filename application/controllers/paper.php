@@ -20,9 +20,9 @@ class Paper extends CI_Controller {
         $cid = filter_var($this->input->get('cid', true), FILTER_VALIDATE_INT);
         $this->load->model('MPapers', 'MPapers');
         if ($cid > 0) {
-            $papers = $this->MPaper->getPapersByCategory($cid);
+            $papers = $this->MPapers->getPapersByCategory($cid);
         } else {
-            $papers = $this->MPaper->getPapers();
+            $papers = $this->MPapers->getPapers();
         }
         $data = array();
         $data['papers'] = $papers;
@@ -84,7 +84,7 @@ class Paper extends CI_Controller {
             $data['category_id'] = $this->input->post('category_id');
             $data['answer_minutes'] = $this->input->post('answer_minutes');
             $data['pass_score'] = $this->input->post('pass_score');
-            $data['categories'] = $this->MCategories->getCategories();
+            $data['category_id'] = $this->input->post('category_id');
             $this->load->model('MPapers', 'MPapers');
             $paper_id = $this->MPapers->add($data);
             if ($paper_id > 0) {
@@ -110,12 +110,14 @@ class Paper extends CI_Controller {
     public function paper_details($paper_id)
     {
         $this->load->model('MPapers', 'MPapers');
-        $this->load->model('MQuestion', 'MQestions');
+        $this->load->model('MQuestions', 'MQuestions');
+        $this->load->model('MCategories', 'MCategories');
         $details = $this->MPapers->getPaperById($paper_id);
         $questions = $this->MQuestions->getQuestions($paper_id);
         $data = array();
-        $data['details'] = $details;
+        $data['paper'] = $details[0];
         $data['questions'] = $questions;
+        $data['categories'] = $this->MCategories->getCategories();
         $this->load->view('backend/base');
         $this->load->view('paper/paper_details', $data);
         $this->load->view('backend/base_footer');

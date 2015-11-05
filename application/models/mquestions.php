@@ -80,9 +80,9 @@ class MQuestions extends CI_Model {
         $result = $this->db->query($sql);
 
         if($result === true) {
-            return true;
+            return $this->db->insert_id();
         }else {
-            return false;
+            return 0;
         }
     }
 

@@ -26,7 +26,7 @@
     <?php if($f['state'] == 'error') { ?>
         <script>
             $('#error-bar').show();
-            setTimeout(function(){$('#success-bar').fadeOut()}, 1000)
+            setTimeout(function(){$('#error-bar').fadeOut()}, 1000)
         </script>
     <?php } ?>
     <?php } ?>
@@ -35,7 +35,7 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    试题主体<input type="hidden" id="paper_id" value="<?php echo $paper->id?>" />
+                    试题主体
                 </div>
                 <div class="panel-body">
                     <div class="row">
@@ -49,7 +49,7 @@
                                 <label>所属分类</label>
                                 <select name="category_id" id="category" class="form-control">
                                     <?php foreach($categories as $v) {?>
-                                        <option value="<?php echo $v->id; ?>" <?php echo $paper->category_id==$v->id?"selected=\"selected\"":"";?>>
+                                        <option value="<?php echo $v->id; ?>">
                                             <?php echo $v->name; ?>
                                         </option>
                                     <?php } ?>
@@ -70,6 +70,7 @@
                                     <option value="0" selected="selected">否</option>
                                 </select>
                             </div>
+                                <div class="form-group"><input type="submit" class="btn btn-primary" value="提交"></div>
                             </form>
                         </div>
                     </div>

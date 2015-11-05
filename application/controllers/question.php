@@ -44,26 +44,25 @@ class Question extends CI_Controller {
             $this->load->view('paper/paper_add');
         } else {
             $data = array();
-            if ($this->input->post('image') != '') {
+            if (is_uploaded_file($_FILES['image']['tmp_name'])) {
+                $config = array();
                 $config['upload_path'] = './uploads/';
                 $config['file_name'] = uniqid();
                 $config['allowed_types'] = 'jpg|jpeg|png|gif';
                 $config['max_size']	= '500000';
 
                 $this->load->library('upload', $config);
-                if ( ! $this->upload->do_upload('images'))
-                {
-                    $error = $this->upload->display_errors();
-                $this->session->set_flashdata('flashdata',
-                    array(
-                        'state' => 'error',
-                        'message' => $error,
-                    )
-                );
-                redirect('paper/paper_details/'.$paper_id);
-            }
-                else
-                {
+                if ( ! $this->upload->do_upload('image')) {
+                        $error = $this->upload->display_errors();
+                    $this->session->set_flashdata('flashdata',
+                        array(
+                            'state' => 'error',
+                            'message' => $error,
+                        )
+                    );
+                    redirect('paper/paper_details/'.$paper_id);
+                    exit;
+                } else {
                     $upload_data = array('upload_data' => $this->upload->data());
                     //$data['avatardir'] = $upload_data['upload_data']['full_path'];
                     $path = $upload_data['upload_data']['file_path'];
@@ -72,8 +71,9 @@ class Question extends CI_Controller {
                     $data['image'] = $fname;
                 }
             }
-            $data['name'] = $this->input->post('name');
+            $data['title'] = $this->input->post('title');
             $data['paper_id'] = $paper_id;
+            $data['question_no'] = $this->input->post('question_no');
             $data['score'] = $this->input->post('score');
             $this->load->model('MQuestions', 'MQuestions');
             $question_id = $this->MQuestions->add($data);
@@ -174,9 +174,9 @@ class Question extends CI_Controller {
     }
 
 
-    public function question_delete()
+    public function question_delete($id)
     {
-        $id = filter_var($this->input->get('id', TRUE), FILTER_VALIDATE_INT);
+        //$id = filter_var($this->input->get('id', TRUE), FILTER_VALIDATE_INT);
         $pid = filter_var($this->input->get('pid', TRUE), FILTER_VALIDATE_INT);
         $result = $this->db->delete('questions', array('id'=>$id));
         if ($result === true) {
@@ -230,7 +230,7 @@ class Question extends CI_Controller {
         }
         $this->load->model('MQuestions', 'MQuestions');
         if ($table == 'question') {
-            if($this->MQuestion->update($data, $where)) {
+            if($this->MQuestions->update($data, $where)) {
                 $this->output
                     ->set_content_type('application/json')
                     ->set_output(json_encode(
@@ -253,7 +253,7 @@ class Question extends CI_Controller {
             exit;
         } else if ($table == 'option') {
             if ($option != '') {
-                if($this->MQuestion->update_option($data, $where)) {
+                if($this->MQuestions->update_option($data, $where)) {
                     $this->output
                         ->set_content_type('application/json')
                         ->set_output(json_encode(
@@ -285,5 +285,159 @@ class Question extends CI_Controller {
             }
         }
     }
+
+    public function question_update()
+    {
+        $id = filter_var($this->input->post('id'), FILTER_VALIDATE_INT);
+        $paper_id = filter_var($this->input->post('paper_id'), FILTER_VALIDATE_INT);
+        $title = $this->input->post('title');
+        $score = filter_var($this->input->post('score'), FILTER_VALIDATE_INT);
+        $question_no = filter_var($this->input->post('question_no'), FILTER_VALIDATE_INT);
+        $option1 = $this->input->post('option1');
+        $option2 = $this->input->post('option2');
+        $option3 = $this->input->post('option3');
+        $option4 = $this->input->post('option4');
+        $option5 = $this->input->post('option5');
+        $option6 = $this->input->post('option6');
+        $option7 = $this->input->post('option7');
+        $correct_option_no = filter_var($this->input->post('correct'), FILTER_VALIDATE_INT);
+        if ($id > 0)
+            $where = array('id' => $id);
+
+        $data = array();
+        $data['title'] = $title;
+        $data['score'] = $score;
+        $data['question_no'] = $question_no;
+        if (is_uploaded_file($_FILES['image']['tmp_name'])) {
+            $config = array();
+            $config['upload_path'] = './uploads/';
+            $config['file_name'] = uniqid();
+            $config['allowed_types'] = 'jpg|jpeg|png|gif';
+            $config['max_size'] = '500000';
+
+            $this->load->library('upload', $config);
+            if (!$this->upload->do_upload('image')) {
+                $error = $this->upload->display_errors();
+                $this->session->set_flashdata('flashdata',
+                    array(
+                        'state' => 'error',
+                        'message' => $error,
+                    )
+                );
+                redirect('paper/paper_details/' . $paper_id);
+                exit;
+            } else {
+                $upload_data = array('upload_data' => $this->upload->data());
+                //$data['avatardir'] = $upload_data['upload_data']['full_path'];
+                $path = $upload_data['upload_data']['file_path'];
+                $fname = $upload_data['upload_data']['file_name'];
+                $fname = '/uploads/' . $fname;
+                $data['image'] = $fname;
+            }
+        }
+        $this->load->model('MQuestions', 'MQuestions');
+        $qresult = $this->MQuestions->update($data, $where);
+        if ($this->input->post('option1')) {
+            $data = array();
+            $update = array();
+            $data['option_no'] = '1';
+            $update['content'] = $this->input->post('option1');
+            if ($this->input->post('correct') == 1)
+                $update['is_correct'] = 1;
+            else
+                $update['is_correct'] = 0;
+            $data['question_id'] = $id;
+            $this->MQuestions->update_option($update, $data);
+        }
+        if ($this->input->post('option2')) {
+            $data = array();
+            $update = array();
+            $data['option_no'] = '2';
+            $update['content'] = $this->input->post('option2');
+            if ($this->input->post('correct') == 2)
+                $update['is_correct'] = 1;
+            else
+                $update['is_correct'] = 0;
+            $data['question_id'] = $id;
+            $this->MQuestions->update_option($update, $data);
+        }
+        if ($this->input->post('option3')) {
+            $data = array();
+            $update = array();
+            $data['option_no'] = '3';
+            $update['content'] = $this->input->post('option3');
+            if ($this->input->post('correct') == 3)
+                $update['is_correct'] = 1;
+            else
+                $update['is_correct'] = 0;
+            $data['question_id'] = $id;
+            $this->MQuestions->update_option($update, $data);
+        }
+        if ($this->input->post('option4')) {
+            $data = array();
+            $update = array();
+            $data['option_no'] = '4';
+            $update['content'] = $this->input->post('option4');
+            if ($this->input->post('correct') == 4)
+                $update['is_correct'] = 1;
+            else
+                $update['is_correct'] = 0;
+            $data['question_id'] = $id;
+            $this->MQuestions->update_option($update, $data);
+        }
+        if ($this->input->post('option5')) {
+            $data = array();
+            $update = array();
+            $data['option_no'] = '5';
+            $update['content'] = $this->input->post('option5');
+            if ($this->input->post('correct') == 5)
+                $update['is_correct'] = 1;
+            else
+                $update['is_correct'] = 0;
+            $data['question_id'] = $id;
+            $this->MQuestions->update_option($update, $data);
+        }
+        if ($this->input->post('option6')) {
+            $data = array();
+            $update = array();
+            $data['option_no'] = '6';
+            $update['content'] = $this->input->post('option6');
+            if ($this->input->post('correct') == 6)
+                $update['is_correct'] = 1;
+            else
+                $update['is_correct'] = 0;
+            $data['question_id'] = $id;
+            $this->MQuestions->update_option($update, $data);
+        }
+        if ($this->input->post('option7')) {
+            $data = array();
+            $update = array();
+            $data['option_no'] = '7';
+            $update['content'] = $this->input->post('option7');
+            if ($this->input->post('correct') == 7)
+                $update['is_correct'] = 1;
+            else
+                $update['is_correct'] = 0;
+            $data['question_id'] = $id;
+            $this->MQuestions->update_option($update, $data);
+        }
+        if($qresult) {
+            $this->session->set_flashdata('flashdata',
+                array(
+                    'state' => 'success',
+                    'message' => '修改成功',
+                )
+            );
+        } else {
+            $this->session->set_flashdata('flashdata',
+                array(
+                    'state' => 'error',
+                    'message' => '修改失败',
+                )
+            );
+        }
+        redirect('paper/paper_details/'.$paper_id);
+    }
+
 }
 

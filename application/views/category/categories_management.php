@@ -27,7 +27,7 @@
     <?php if($f['state'] == 'error') { ?>
         <script>
             $('#error-bar').show();
-            setTimeout(function(){$('#success-bar').fadeOut()}, 1000)
+            setTimeout(function(){$('#error-bar').fadeOut()}, 1000)
         </script>
     <?php } ?>
     <?php } ?>
