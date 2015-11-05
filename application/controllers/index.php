@@ -17,7 +17,10 @@ class Index extends CI_Controller {
         $papers = array();
         foreach($categories as $k => $v) {
             $categories[$k]->papers = $this->MPapers->getPapersByCategory($v->id);
-            $papers[] = $categories[$k]->papers;
+            foreach($categories[$k]->papers as $ip) {
+                if( intval($ip->id) >0)
+                    $papers[] = $ip;
+            }
         }
         foreach ($categories as $k => $v) {
             if ($v->pid != '') {
