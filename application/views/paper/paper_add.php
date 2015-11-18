@@ -20,13 +20,13 @@
         <?php if($f['state'] == 'success') { ?>
         <script>
             $('#success-bar').show();
-            setTimeout(function(){$('#success-bar').fadeOut()}, 1000)
+            setTimeout(function(){$('#success-bar').fadeOut()}, 3000)
         </script>
     <?php } ?>
     <?php if($f['state'] == 'error') { ?>
         <script>
             $('#error-bar').show();
-            setTimeout(function(){$('#error-bar').fadeOut()}, 1000)
+            setTimeout(function(){$('#error-bar').fadeOut()}, 3000)
         </script>
     <?php } ?>
     <?php } ?>
@@ -58,6 +58,11 @@
                             <div class="form-group">
                                 <label>考试限时</label>
                                 <input class="form-control" placeholder="" type="number" value="45" id="answer_minutes" name="answer_minutes"/>
+                            </div>
+                            <div class="form-group">
+                                <label>是否为练习题目</label>
+                                <input type="checkbox" class="form-control" name="is_test" />
+                                <p class="help-block">(练习题目答题不限时)</p>
                             </div>
                             <div class="form-group">
                                 <label>及格分数</label>

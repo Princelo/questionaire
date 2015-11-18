@@ -24,7 +24,6 @@ class Paper extends CI_Controller {
         } else {
             $papers = $this->MPapers->getPapers();
         }
-        $data = array();
         $data['papers'] = $papers;
         $this->load->view('backend/base');
         $this->load->view('paper/papers_list', $data);
@@ -85,6 +84,7 @@ class Paper extends CI_Controller {
             $data['answer_minutes'] = $this->input->post('answer_minutes');
             $data['pass_score'] = $this->input->post('pass_score');
             $data['category_id'] = $this->input->post('category_id');
+            $data['is_test'] = $this->input->post('is_test')=='true'?'1':'0';
             $this->load->model('MPapers', 'MPapers');
             $paper_id = $this->MPapers->add($data);
             if ($paper_id > 0) {
@@ -102,7 +102,7 @@ class Paper extends CI_Controller {
                         'message' => '添加试题失败',
                     )
                 );
-                redirect('paper/paper_list/');
+                redirect('paper/papers_list/');
             }
         }
     }
@@ -131,16 +131,16 @@ class Paper extends CI_Controller {
             $this->session->set_flashdata('flashdata',
                 array(
                     'state' => 'success',
-                    'message' => '删除类别成功'
+                    'message' => '删除试卷成功'
                 ));
         } else {
             $this->session->set_flashdata('flashdata',
                 array(
                     'state' => 'error',
-                    'message' => '删除类别失败'
+                    'message' => '删除试卷失败'
                 ));
         }
-        redirect('paper/paper_list');
+        redirect('paper/papers_list');
     }
 
     public function ajax_paper_update()
@@ -150,6 +150,7 @@ class Paper extends CI_Controller {
         $category_id = filter_var($this->input->post('category_id'), FILTER_VALIDATE_INT);
         $answer_minutes = filter_var($this->input->post('answer_minutes'), FILTER_VALIDATE_INT);
         $pass_score = filter_var($this->input->post('pass_score'), FILTER_VALIDATE_INT);
+        $is_test = $this->input->post('is_test');
         $is_effect = $this->input->post('is_effect');
         $value = '';
         if ($id > 0)
@@ -169,9 +170,33 @@ class Paper extends CI_Controller {
             $data = array('pass_score'=>$pass_score);
             $value = $pass_score;
         }
-        if($is_effect === '0' || $is_effect === '1')
-            $data = array('is_effect'=>$is_effect);
+        if($is_test == 'true') {
+            $data = array('is_test'=>'1');
+            $value = $is_test;
+        }
+        if($is_test == 'false') {
+            $data = array('is_test'=>'0');
+            $value = $is_test;
+        }
         $this->load->model('MPapers', 'MPapers');
+        if ($is_effect == '1') {
+            $papers = $this->MPapers->getPaperById($id);
+            $paper = $papers[0];
+            if (intval($paper->total_score < intval($paper->pass_score))) {
+                $this->output
+                    ->set_content_type('application/json')
+                    ->set_output(json_encode(
+                        array(
+                            'state' => 'error',
+                            'message' => '修改失败, 卷面总分'.intval($paper->total_score)."分少于及格分数".intval($paper->pass_score)."分"
+                        )
+                    ));
+                return false;
+            }
+        }
+        if($is_effect === '0' || $is_effect === '1') {
+            $data = array('is_effect'=>$is_effect);
+        }
         if($this->MPapers->update($data, $where)) {
             $this->output
                 ->set_content_type('application/json')

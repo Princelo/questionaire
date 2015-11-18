@@ -23,17 +23,17 @@ class MPapers extends CI_Model {
                 p.pass_score pass_score,
                 p.create_time create_time,
                 p.is_effect is_effect,
+                p.is_test is_test,
                 (select name from categories where id = p.category_id) category,
                 p.category_id category_id,
                 sum(q.score) total_score,
                 count(q.id) total_questions,
-                count(s.id) sessions_count
+                (select count(s.id) from sessions s where s.paper_id = p.id ) as sessions_count
             from
                 papers p
                 left join questions q
                 on q.paper_id = p.id
-                left join sessions s
-                on s.paper_id = p.id
+            group by p.id
             ;
         ";
         $query = $this->db->query($sql);
@@ -59,18 +59,92 @@ class MPapers extends CI_Model {
                 p.pass_score pass_score,
                 p.create_time create_time,
                 p.is_effect is_effect,
+                p.is_test is_test,
                 (select name from categories where id = p.category_id) category,
                 p.category_id category_id,
                 sum(q.score) total_score,
                 count(q.id) total_questions,
-                count(s.id) sessions_count
+                (select count(s.id) from sessions s where s.paper_id = p.id ) as sessions_count
             from
                 papers p
                 left join questions q
                 on q.paper_id = p.id
-                left join sessions s
-                on s.paper_id = p.id
             where p.category_id = ?
+            group by p.id
+        ";
+        $query = $this->db->query($sql, array($cid));
+        $data = array();
+        if($query->num_rows() > 0){
+            foreach ($query->result() as $key => $val) {
+                $data[] = $val;
+            }
+        }
+        $query->free_result();
+
+        return $data;
+    }
+
+    public function getPapersPublished()
+    {
+        $sql = "";
+        $sql .= "
+            select
+                p.id   id,
+                p.name title,
+                p.answer_minutes answer_minutes,
+                p.pass_score pass_score,
+                p.create_time create_time,
+                p.is_effect is_effect,
+                p.is_test is_test,
+                (select name from categories where id = p.category_id) category,
+                p.category_id category_id,
+                sum(q.score) total_score,
+                count(q.id) total_questions,
+                (select count(s.id) from sessions s where s.paper_id = p.id ) as sessions_count
+            from
+                papers p
+                left join questions q
+                on q.paper_id = p.id
+            where p.is_effect = 1
+            group by p.id
+            ;
+        ";
+        $query = $this->db->query($sql);
+        $data = array();
+        if($query->num_rows() > 0){
+            foreach ($query->result() as $key => $val) {
+                $data[] = $val;
+            }
+        }
+        $query->free_result();
+
+        return $data;
+    }
+
+    public function getPapersPublishedByCategory($cid)
+    {
+        $sql = "";
+        $sql .= "
+            select
+                p.id   id,
+                p.name title,
+                p.answer_minutes answer_minutes,
+                p.pass_score pass_score,
+                p.create_time create_time,
+                p.is_effect is_effect,
+                p.is_test is_test,
+                (select name from categories where id = p.category_id) category,
+                p.category_id category_id,
+                sum(q.score) total_score,
+                count(q.id) total_questions,
+                (select count(s.id) from sessions s where s.paper_id = p.id ) as sessions_count
+            from
+                papers p
+                left join questions q
+                on q.paper_id = p.id
+            where p.category_id = ?
+              and p.is_effect = 1
+            group by p.id
         ";
         $query = $this->db->query($sql, array($cid));
         $data = array();
@@ -95,19 +169,18 @@ class MPapers extends CI_Model {
                 p.pass_score pass_score,
                 p.create_time create_time,
                 p.is_effect is_effect,
+                p.is_test is_test,
                 (select name from categories where id = p.category_id) category,
                 p.category_id category_id,
                 sum(q.score) total_score,
                 count(q.id) total_questions,
-                count(s.id) sessions_count
+                (select count(s.id) from sessions s where s.paper_id = p.id ) as sessions_count
             from
                 papers p
                 left join questions q
                 on q.paper_id = p.id
-                left join sessions s
-                on s.paper_id = p.id
-            where
-                p.id = ?
+            where p.id = ?
+            group by p.id
         ";
         $query = $this->db->query($sql, $id);
         $data = array();

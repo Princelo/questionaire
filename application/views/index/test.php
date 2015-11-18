@@ -244,7 +244,7 @@
                 $('#hiddenname').val($('#txtname').val());
                 $('#hiddengender').val($('#txtsex').val());
                 $('#hiddenmobile').val($('#txtmobile').val());
-                countdown('countdown');
+                //countdown('countdown');
                 $('.operbar').show();
             } else if ($('#current_mode').val()=='solution'){
                 alert('请重新开始或另选试题');
@@ -299,7 +299,7 @@
                 'type': 'post',
                 'url':  '<?php echo site_url('index/submit');?>',
                 data : {
-                   'paper_id' : <?php echo $paper->id;?>,
+                    'paper_id' : <?php echo $paper->id;?>,
                     'submit': JSON.stringify(submit),
                     'name' : $('#hiddenname').val(),
                     'gender' : $('#hiddengender').val(),
@@ -365,54 +365,54 @@
 <div class="bread" style="height:35px;font-size:12px; padding-top:4px;">
     <span style="width:1000px; margin:0 auto;font-size:12px;display:block; line-height:22px;">您当前的位置:首页&nbsp;>&nbsp;深圳站&nbsp;>&nbsp;考试模拟</span>
 </div>
-    <input id="current_select" value="1" type="hidden"/>
-    <input id="current_mode" value="preparing" type="hidden"><!--ending solution running-->
-    <input id="hiddenname" value="" type="hidden">
-    <input id="hiddengender" value="" type="hidden">
-    <input id="hiddenmobile" value="" type="hidden">
+<input id="current_select" value="1" type="hidden"/>
+<input id="current_mode" value="preparing" type="hidden"><!--ending solution running-->
+<input id="hiddenname" value="" type="hidden">
+<input id="hiddengender" value="" type="hidden">
+<input id="hiddenmobile" value="" type="hidden">
 <!--<div id="allow">您所在的位置:<a href="/">首页</a>&gt;&gt;<a href="/exam/">模拟考试</a></div>-->
 <div id="jx">
     <div id="left">
-    <ul class="list-group">
-        <?php foreach($roots as $l) {?>
-            <li class="list-group-item">
-                <h4><span><?php echo $l->name;?></span></h4>
-                <ul class="paper-list">
-                    <?php foreach($l->papers as $p) {?>
-                        <li><a href="<?php echo site_url('index/paper/'.$p->id);?>"><?php echo $p->title; ?></a></li>
-                    <?php } ?>
-                </ul>
-                <?php if ($l->has_sub_categories) { ?>
-                    <ul class="list-group">
-                        <?php foreach($l->roots as $l) {?>
-                            <li class="list-group-item">
-                                <h4><span><?php echo $l->name;?></span></h4>
-                                <ul class="paper-list">
-                                    <?php foreach($l->papers as $p) {?>
-                                        <li><a href="<?php echo site_url('index/paper/'.$p->id);?>"><?php echo $p->title; ?></a></li>
-                                    <?php } ?>
-                                </ul>
-                                <?php if ($l->has_sub_categories) { ?>
-                                    <ul class="list-group">
-                                        <?php foreach($l->roots as $l) {?>
-                                            <li class="list-group-item">
-                                                <h4><span><?php echo $l->name;?></span></h4>
-                                                <ul class="paper-list">
-                                                    <?php foreach($l->papers as $p) {?>
-                                                        <li><a href="<?php echo site_url('index/paper/'.$p->id);?>"><?php echo $p->title; ?></a></li>
-                                                    <?php } ?>
-                                                </ul>
-                                            </li>
-                                        <?php } ?>
-                                    </ul>
-                                <?php } ?>
-                            </li>
+        <ul class="list-group">
+            <?php foreach($roots as $l) {?>
+                <li class="list-group-item">
+                    <h4><span><?php echo $l->name;?></span></h4>
+                    <ul class="paper-list">
+                        <?php foreach($l->papers as $p) {?>
+                            <li><a href="<?php echo site_url('index/paper/'.$p->id);?>"><?php echo $p->title; ?></a></li>
                         <?php } ?>
                     </ul>
-                <?php } ?>
-            </li>
-        <? } ?>
-    </ul>
+                    <?php if ($l->has_sub_categories) { ?>
+                        <ul class="list-group">
+                            <?php foreach($l->roots as $l) {?>
+                                <li class="list-group-item">
+                                    <h4><span><?php echo $l->name;?></span></h4>
+                                    <ul class="paper-list">
+                                        <?php foreach($l->papers as $p) {?>
+                                            <li><a href="<?php echo site_url('index/paper/'.$p->id);?>"><?php echo $p->title; ?></a></li>
+                                        <?php } ?>
+                                    </ul>
+                                    <?php if ($l->has_sub_categories) { ?>
+                                        <ul class="list-group">
+                                            <?php foreach($l->roots as $l) {?>
+                                                <li class="list-group-item">
+                                                    <h4><span><?php echo $l->name;?></span></h4>
+                                                    <ul class="paper-list">
+                                                        <?php foreach($l->papers as $p) {?>
+                                                            <li><a href="<?php echo site_url('index/paper/'.$p->id);?>"><?php echo $p->title; ?></a></li>
+                                                        <?php } ?>
+                                                    </ul>
+                                                </li>
+                                            <?php } ?>
+                                        </ul>
+                                    <?php } ?>
+                                </li>
+                            <?php } ?>
+                        </ul>
+                    <?php } ?>
+                </li>
+            <? } ?>
+        </ul>
         <br class="spacer">
     </div>
 
@@ -458,7 +458,7 @@
     </form>
 
     <div class="examsv">
-        模拟考试系统  <font size="2" id="examTimePlan">(剩余时间:<span id="countdown"><?php echo $paper->answer_minutes;?>分00秒</span>)</font>
+        模拟考试系统  <font size="2" id="examTimePlan" style="display:none;">(剩余时间:<span id="countdown"><?php echo $paper->answer_minutes;?>分00秒</span>)</font>
     </div>
     <div class="examplan">
         <div class="esubject" id="esubject"><?php echo $question->question_no; ?>. <?php echo $question->title; ?> (分值:<?php echo $question->score;?>)</div>
@@ -482,11 +482,11 @@
         <div class="answerbar">
             <?php $solution = 'ERROR'; ?>
             <?php foreach($options as $k => $o) {
-               if ($o->is_correct == '1') {
-                   $solution = convert_option_no($o->option_no);
-                   break;
-               }
-             } ?>
+                if ($o->is_correct == '1') {
+                    $solution = convert_option_no($o->option_no);
+                    break;
+                }
+            } ?>
             <p class="eresult" id="eresult">您的回答: <br><span class="solution" id="esolution" style="display:none;">正确<?php echo $solution;?></span></p>
             <input type="button" onclick="toSelect('1')" id="bt1" value="A">
             <input type="button" onclick="toSelect('2')" id="bt2" value="B">
@@ -507,7 +507,7 @@
 
         <div class="esubbar">
             <?php foreach($questions as $k=>$q) { ?>
-            <span onclick="subbar(<?php echo $k + 1; ?>)" id="bar<?php echo $k + 1; ?>"><?php echo $k + 1; ?></span>
+                <span onclick="subbar(<?php echo $k + 1; ?>)" id="bar<?php echo $k + 1; ?>"><?php echo $k + 1; ?></span>
             <?php } ?>
         </div>
     </div>

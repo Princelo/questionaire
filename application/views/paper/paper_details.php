@@ -20,13 +20,13 @@
         <?php if($f['state'] == 'success') { ?>
         <script>
             $('#success-bar').show();
-            setTimeout(function(){$('#success-bar').fadeOut()}, 1000)
+            setTimeout(function(){$('#success-bar').fadeOut()}, 3000)
         </script>
     <?php } ?>
     <?php if($f['state'] == 'error') { ?>
         <script>
             $('#error-bar').show();
-            setTimeout(function(){$('#error-bar').fadeOut()}, 1000)
+            setTimeout(function(){$('#error-bar').fadeOut()}, 3000)
         </script>
     <?php } ?>
     <?php } ?>
@@ -44,11 +44,11 @@
                         $('#title').val(response.value);
                         $('#success-bar').html(response.message);
                         $('#success-bar').fadeIn();
-                        setTimeout(function(){$('#success-bar').fadeOut()}, 1000)
+                        setTimeout(function(){$('#success-bar').fadeOut()}, 3000)
                     } else {
                         $('#error-bar').html(response.message);
                         $('#error-bar').fadeIn();
-                        setTimeout(function(){$('#error-bar').fadeOut()}, 1000)
+                        setTimeout(function(){$('#error-bar').fadeOut()}, 3000)
                     }
                 }
             });
@@ -66,11 +66,11 @@
                     if (response.state == 'success') {
                         $('#success-bar').html(response.message);
                         $('#success-bar').fadeIn();
-                        setTimeout(function(){$('#success-bar').fadeOut()}, 1000)
+                        setTimeout(function(){$('#success-bar').fadeOut()}, 3000)
                     } else {
                         $('#error-bar').html(response.message);
                         $('#error-bar').fadeIn();
-                        setTimeout(function(){$('#error-bar').fadeOut()}, 1000)
+                        setTimeout(function(){$('#error-bar').fadeOut()}, 3000)
                     }
                 }
             });
@@ -88,11 +88,11 @@
                         $('#answer_minutes').val(response.value);
                         $('#success-bar').html(response.message);
                         $('#success-bar').fadeIn();
-                        setTimeout(function(){$('#success-bar').fadeOut()}, 1000)
+                        setTimeout(function(){$('#success-bar').fadeOut()}, 3000)
                     } else {
                         $('#error-bar').html(response.message);
                         $('#error-bar').fadeIn();
-                        setTimeout(function(){$('#error-bar').fadeOut()}, 1000)
+                        setTimeout(function(){$('#error-bar').fadeOut()}, 3000)
                     }
                 }
             });
@@ -110,11 +110,32 @@
                         $('#pass_score').val(response.value);
                         $('#success-bar').html(response.message);
                         $('#success-bar').fadeIn();
-                        setTimeout(function(){$('#success-bar').fadeOut()}, 1000)
+                        setTimeout(function(){$('#success-bar').fadeOut()}, 3000)
                     } else {
                         $('#error-bar').html(response.message);
                         $('#error-bar').fadeIn();
-                        setTimeout(function(){$('#error-bar').fadeOut()}, 1000)
+                        setTimeout(function(){$('#error-bar').fadeOut()}, 3000)
+                    }
+                }
+            });
+        }
+        var update_is_test = function() {
+            $.ajax({
+                type: 'post',
+                url: '<?php echo site_url('paper/ajax_paper_update')?>',
+                data: {
+                    'is_test': document.getElementById('is_test').checked,
+                    'id': '<?php echo $paper->id; ?>'
+                },
+                success: function (response) {
+                    if (response.state == 'success') {
+                        $('#success-bar').html(response.message);
+                        $('#success-bar').fadeIn();
+                        setTimeout(function(){$('#success-bar').fadeOut()}, 3000)
+                    } else {
+                        $('#error-bar').html(response.message);
+                        $('#error-bar').fadeIn();
+                        setTimeout(function(){$('#error-bar').fadeOut()}, 3000)
                     }
                 }
             });
@@ -131,11 +152,11 @@
                     if (response.state == 'success') {
                         $('#success-bar').html(response.message);
                         $('#success-bar').fadeIn();
-                        setTimeout(function(){$('#success-bar').fadeOut()}, 1000)
+                        setTimeout(function(){$('#success-bar').fadeOut()}, 3000)
                     } else {
                         $('#error-bar').html(response.message);
                         $('#error-bar').fadeIn();
-                        setTimeout(function(){$('#error-bar').fadeOut()}, 1000)
+                        setTimeout(function(){$('#error-bar').fadeOut()}, 3000)
                     }
                 }
             });
@@ -152,11 +173,11 @@
                     if (response.state == 'success') {
                         $('#success-bar').html(response.message);
                         $('#success-bar').fadeIn();
-                        setTimeout(function(){$('#success-bar').fadeOut()}, 1000)
+                        setTimeout(function(){$('#success-bar').fadeOut()}, 3000)
                     } else {
                         $('#error-bar').html(response.message);
                         $('#error-bar').fadeIn();
-                        setTimeout(function(){$('#error-bar').fadeOut()}, 1000)
+                        setTimeout(function(){$('#error-bar').fadeOut()}, 3000)
                     }
                 }
             });
@@ -174,11 +195,11 @@
                     if (response.state == 'success') {
                         $('#success-bar').html(response.message);
                         $('#success-bar').fadeIn();
-                        setTimeout(function(){$('#success-bar').fadeOut()}, 1000)
+                        setTimeout(function(){$('#success-bar').fadeOut()}, 3000)
                     } else {
                         $('#error-bar').html(response.message);
                         $('#error-bar').fadeIn();
-                        setTimeout(function(){$('#error-bar').fadeOut()}, 1000)
+                        setTimeout(function(){$('#error-bar').fadeOut()}, 3000)
                     }
                 }
             });
@@ -195,11 +216,11 @@
                     if (response.state == 'success') {
                         $('#success-bar').html(response.message);
                         $('#success-bar').fadeIn();
-                        setTimeout(function(){$('#success-bar').fadeOut()}, 1000)
+                        setTimeout(function(){$('#success-bar').fadeOut()}, 3000)
                     } else {
                         $('#error-bar').html(response.message);
                         $('#error-bar').fadeIn();
-                        setTimeout(function(){$('#error-bar').fadeOut()}, 1000)
+                        setTimeout(function(){$('#error-bar').fadeOut()}, 3000)
                     }
                 }
             });
@@ -217,11 +238,11 @@
                     if (response.state == 'success') {
                         $('#success-bar').html(response.message);
                         $('#success-bar').fadeIn();
-                        setTimeout(function(){$('#success-bar').fadeOut()}, 1000)
+                        setTimeout(function(){$('#success-bar').fadeOut()}, 3000)
                     } else {
                         $('#error-bar').html(response.message);
                         $('#error-bar').fadeIn();
-                        setTimeout(function(){$('#error-bar').fadeOut()}, 1000)
+                        setTimeout(function(){$('#error-bar').fadeOut()}, 3000)
                     }
                 }
             });
@@ -238,11 +259,11 @@
                     if (response.state == 'success') {
                         $('#success-bar').html(response.message);
                         $('#success-bar').fadeIn();
-                        setTimeout(function(){$('#success-bar').fadeOut()}, 1000)
+                        setTimeout(function(){$('#success-bar').fadeOut()}, 3000)
                     } else {
                         $('#error-bar').html(response.message);
                         $('#error-bar').fadeIn();
-                        setTimeout(function(){$('#error-bar').fadeOut()}, 1000)
+                        setTimeout(function(){$('#error-bar').fadeOut()}, 3000)
                     }
                 }
             });
@@ -259,11 +280,11 @@
                     if (response.state == 'success') {
                         $('#success-bar').html(response.message);
                         $('#success-bar').fadeIn();
-                        setTimeout(function(){$('#success-bar').fadeOut()}, 1000)
+                        setTimeout(function(){$('#success-bar').fadeOut()}, 3000)
                     } else {
                         $('#error-bar').html(response.message);
                         $('#error-bar').fadeIn();
-                        setTimeout(function(){$('#error-bar').fadeOut()}, 1000)
+                        setTimeout(function(){$('#error-bar').fadeOut()}, 3000)
                     }
                 }
             });
@@ -299,6 +320,12 @@
                                     <label>考试限时</label>
                                     <input class="form-control" placeholder="" type="number" value="<?php echo $paper->answer_minutes;?>" id="answer_minutes" />
                                     <p class="help-block"><button onclick="update_minutes()" class="btn btn-default">修改限时</button></p>
+                                </div>
+                                <div class="form-group">
+                                    <label>是否为练习题目</label>
+                                    <input type="checkbox" class="form-control" id="is_test" name="is_test" <?php echo $paper->is_test == '1'?'checked':''?>/>
+                                    <p class="help-block">(练习题目答题不限时)</p>
+                                    <p class="help-block"><button onclick="update_is_test()" class="btn btn-default">修改</button></p>
                                 </div>
                                 <div class="form-group">
                                     <label>及格分数</label>
@@ -346,10 +373,10 @@
                                                             </td>
                                                             <td><?php echo $q->score;?>分</td>
                                                             <td>
-                                                                <a href="javascript:void(0);" data-toggle="modal" data-target="#myModal<?php echo $q->id?>" class="btn btn-default">
+                                                                <a href="javascript:void(0);" data-toggle="modal" data-target="#myModal<?php echo $q->id?>" class="btn btn-default" <?php if($q->video!='') echo "onclick=\"showflash('".$q->video."', ".$q->id.")\"";?>>
                                                                     修改
                                                                 </a>
-                                                                <a href="<?php echo site_url('question/question_delete/'.$q->id)?>?pid=<?php echo $paper->id ?>" class="btn btn-danger">删除</a>
+                                                                <a onclick="confirm_delete(this)" bhref="<?php echo site_url('question/question_delete/'.$q->id)?>?pid=<?php echo $paper->id ?>" class="btn btn-danger">删除</a>
                                                             </td>
                                                         </tr>
                                                     <?php } ?>
@@ -418,16 +445,29 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>附图</label>
+                                    <label>附图(支援jpg/png/gif 图片格式)</label>
+                                    <input name="image" type="file" class="delete-img<?php echo $q->id;?>">
+                                    <?php if($q->image != '') { ?>
+                                        <img src="<?=$q->image?>" style="width:300px;" class="delete-img<?php echo $q->id;?>"/>
+                                        <a href="javascript:void(0);" class="btn btn-danger" onclick="delete_img(<?php echo $q->id;?>)">删除附图</a>
+                                        <div class="delete-img-mark<?php echo $q->id;?>"></div>
+                                    <?php } ?>
+                                </div>
+                                <div class="form-group">
+                                    <label>附视频(支援MP4/FLV 视频格式)</label>
                                     <input type="hidden" value="<?php echo $q->id;?>" name="id" class="btn btn-default form-control">
                                     <input type="hidden" value="<?php echo $paper->id;?>" name="paper_id" class="btn btn-default form-control">
-                                    <input name="image" type="file">
-                                    <?php if($q->image != '') { ?><img src="<?=$q->image?>" style="width:300px;" /><?php } ?>
+                                    <input name="video" type="file" class="delete-video<?php echo $q->id;?>">
+                                    <?php if($q->video != '') { ?>
+                                        <div id="flashdiv<?php echo $q->id;?>" style="width: 290px; height:185px;"></div>
+                                        <a href="javascript:void(0);" class="btn btn-danger" onclick="delete_video(<?php echo $q->id;?>)">删除附附频</a>
+                                        <div class="delete-video-mark<?php echo $q->id;?>"></div>
+                                    <?php } ?>
                                 </div>
                                 <?php echo form_close(); ?>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" <?php if($q->video!='') echo "onclick=\"closeFlash($q->id)\"";?>>取消</button>
                             <button type="button" class="btn btn-primary" onclick="$('#form<?php echo $q->id?>').submit()">保存</button>
                         </div>
                     </div>
@@ -491,8 +531,12 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label>附图</label>
+                                            <label>附图(支援jpg/png/gif 图片格式)</label>
                                             <input name="image" type="file">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>附视频(支援MP4/FLV 视频格式)</label>
+                                            <input name="video" type="file">
                                         </div>
                                         <input type="submit" value="新增题目" class="btn btn-primary">
                                     <?php echo form_close(); ?>
@@ -515,4 +559,41 @@
             responsive: true
         });
     });
+    var delete_img = function (i) {
+        $('.delete-img'+i).each(function(){
+            $(this).remove();
+        });
+        $('#delete-img-mark'+i).html("<input type=\"hidden\" name=\"delete-img-mark\" value=\"1\" />");
+    }
+    var delete_video = function (i) {
+        closeFlash(i);
+        $('.delete-video'+i).each(function(){
+            $(this).remove();
+        });
+        $('#delete-video-mark'+i).html("<input type=\"hidden\" name=\"delete-video-mark\" value=\"1\" />");
+    }
+    function showflash(ipath, i){
+        //alert('showflash')
+        if(!jwplayer.utils.hasFlash()){
+            alert("未安装Flash播放插件，请联系系统管理员！");
+            return;
+        }
+
+        jwplayer("flashdiv"+i).setup({
+            flashplayer: "/assets/swf/tmri-player.swf",
+            file:ipath,
+            type: "video",
+            autostart:true,
+            repeat:true,
+            height: 185,
+            width: 290,
+            image:"/assets/images/loadvedio.jpg"
+        });
+
+    }
+    function closeFlash(i) {
+        $('#flashdiv'+i).hide();
+        $('#flashdiv'+i+'_wrapper').hide();
+    }
+
 </script>

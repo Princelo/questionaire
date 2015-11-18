@@ -21,6 +21,7 @@ class MQuestions extends CI_Model {
             from
                 questions
             where paper_id = ?
+            order by question_no
             ;
         ";
         $query = $this->db->query($sql, array($paper_id));
@@ -47,6 +48,7 @@ class MQuestions extends CI_Model {
                 options
                 where
                 question_id = ?
+            order by option_no
         ";
         $query = $this->db->query($sql, array($question_id));
         $data = array();

@@ -21,13 +21,13 @@
         <?php if($f['state'] == 'success') { ?>
         <script>
             $('#success-bar').show();
-            setTimeout(function(){$('#success-bar').fadeOut()}, 1000)
+            setTimeout(function(){$('#success-bar').fadeOut()}, 3000)
         </script>
     <?php } ?>
     <?php if($f['state'] == 'error') { ?>
         <script>
             $('#error-bar').show();
-            setTimeout(function(){$('#error-bar').fadeOut()}, 1000)
+            setTimeout(function(){$('#error-bar').fadeOut()}, 3000)
         </script>
     <?php } ?>
     <?php } ?>
@@ -65,7 +65,7 @@
                                                 <td><?php echo $v->total_questions;?>题</td>
                                                 <td><?php echo $v->total_score;?>分</td>
                                                 <td><?php echo $v->sessions_count;?>人</td>
-                                                <td><a href="<?php echo site_url('paper/paper_delete');?>" class="btn btn-danger">删除</a></td>
+                                                <td><a onclick="confirm_delete(this)" bhref="<?php echo site_url('paper/paper_delete/').'?id='.$v->id;?>" class="btn btn-danger">删除</a></td>
                                             </tr>
                                             <?php } ?>
                                         <?php } ?>

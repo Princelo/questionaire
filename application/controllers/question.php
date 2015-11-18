@@ -71,6 +71,33 @@ class Question extends CI_Controller {
                     $data['image'] = $fname;
                 }
             }
+            if (is_uploaded_file($_FILES['video']['tmp_name'])) {
+                $config = array();
+                $config['upload_path'] = './uploads/';
+                $config['file_name'] = uniqid();
+                $config['allowed_types'] = '*';
+                $config['max_size']	= '10000000';
+
+                $this->load->library('upload', $config);
+                if ( ! $this->upload->do_upload('video')) {
+                    $error = $this->upload->display_errors();
+                    $this->session->set_flashdata('flashdata',
+                        array(
+                            'state' => 'error',
+                            'message' => $error,
+                        )
+                    );
+                    redirect('paper/paper_details/'.$paper_id);
+                    exit;
+                } else {
+                    $upload_data = array('upload_data' => $this->upload->data());
+                    //$data['avatardir'] = $upload_data['upload_data']['full_path'];
+                    $path = $upload_data['upload_data']['file_path'];
+                    $fname = $upload_data['upload_data']['file_name'];
+                    $fname = '/uploads/'.$fname;
+                    $data['video'] = $fname;
+                }
+            }
             $data['title'] = $this->input->post('title');
             $data['paper_id'] = $paper_id;
             $data['question_no'] = $this->input->post('question_no');
@@ -308,6 +335,12 @@ class Question extends CI_Controller {
         $data['title'] = $title;
         $data['score'] = $score;
         $data['question_no'] = $question_no;
+
+        if($this->input->post('delete-img-mark') == '1')
+            $data['image'] = null;
+        if($this->input->post('delete-video-mark') == '1')
+            $data['video'] = null;
+
         if (is_uploaded_file($_FILES['image']['tmp_name'])) {
             $config = array();
             $config['upload_path'] = './uploads/';
@@ -333,6 +366,34 @@ class Question extends CI_Controller {
                 $fname = $upload_data['upload_data']['file_name'];
                 $fname = '/uploads/' . $fname;
                 $data['image'] = $fname;
+            }
+        }
+
+        if (is_uploaded_file($_FILES['video']['tmp_name'])) {
+            $config = array();
+            $config['upload_path'] = './uploads/';
+            $config['file_name'] = uniqid();
+            $config['allowed_types'] = '*';
+            $config['max_size'] = '10000000';
+
+            $this->load->library('upload', $config);
+            if (!$this->upload->do_upload('video')) {
+                $error = $this->upload->display_errors();
+                $this->session->set_flashdata('flashdata',
+                    array(
+                        'state' => 'error',
+                        'message' => $error,
+                    )
+                );
+                redirect('paper/paper_details/' . $paper_id);
+                exit;
+            } else {
+                $upload_data = array('upload_data' => $this->upload->data());
+                //$data['avatardir'] = $upload_data['upload_data']['full_path'];
+                $path = $upload_data['upload_data']['file_path'];
+                $fname = $upload_data['upload_data']['file_name'];
+                $fname = '/uploads/' . $fname;
+                $data['video'] = $fname;
             }
         }
         $this->load->model('MQuestions', 'MQuestions');

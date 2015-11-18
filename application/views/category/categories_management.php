@@ -21,13 +21,13 @@
         <?php if($f['state'] == 'success') { ?>
         <script>
             $('#success-bar').show();
-            setTimeout(function(){$('#success-bar').fadeOut()}, 1000)
+            setTimeout(function(){$('#success-bar').fadeOut()}, 3000)
         </script>
     <?php } ?>
     <?php if($f['state'] == 'error') { ?>
         <script>
             $('#error-bar').show();
-            setTimeout(function(){$('#error-bar').fadeOut()}, 1000)
+            setTimeout(function(){$('#error-bar').fadeOut()}, 3000)
         </script>
     <?php } ?>
     <?php } ?>
@@ -59,12 +59,12 @@
                                         $('#button'+cid).prop('disabled', false);
                                         $('#success-bar').html(response.message);
                                         $('#success-bar').fadeIn();
-                                        setTimeout(function(){$('#success-bar').fadeOut()}, 1000)
+                                        setTimeout(function(){$('#success-bar').fadeOut()}, 3000)
                                     } else {
                                         $('#button'+cid).prop('disabled', false);
                                         $('#error-bar').html(response.message);
                                         $('#error-bar').fadeIn();
-                                        setTimeout(function(){$('#error-bar').fadeOut()}, 1000)
+                                        setTimeout(function(){$('#error-bar').fadeOut()}, 3000)
                                     }
                                 }
                             });
@@ -76,8 +76,8 @@
                                 <input value="<?php echo $l->name;?>" id="input<?php echo $l->id?>" class="_form-control"/>
                                 <button onclick="update_category(<?php echo $l->id?>)" id="button<?php echo $l->id?>" class="btn btn-primary">修改名称</button>
                                 <a href="<?php echo site_url('paper/papers_list')?>?cid=<?php echo $l->id?>" class="btn btn-default">查看试题</a>
-                                <a href="javascript:void(0);" data-toggle="modal" data-target="#myModal<?php echo $l->id?>" class="btn btn-default">添加子类別</a>
-                                <a href="<?php echo site_url('category/category_delete');?>?id=<?php echo $l->id; ?>" class="btn btn-danger">删除</a>
+                                <a href="javascript:void(0);" data-toggle="modal" data-target="#myModal<?php echo $l->id?>" class="btn btn-default" style="display:none;">添加子类別</a>
+                                <a onclick="confirm_delete(this)" bhref="<?php echo site_url('category/category_delete');?>?id=<?php echo $l->id; ?>" class="btn btn-danger">删除</a>
                                 <!-- Modal -->
                                 <div class="modal fade" id="myModal<?php echo $l->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
@@ -110,7 +110,7 @@
                                                 <button onclick="update_category(<?php echo $l->id?>)" id="button<?php echo $l->id?>" class="btn btn-primary">修改名称</button>
                                                 <a href="<?php echo site_url('paper/papers_list')?>?cid=<?php echo $l->id?>" class="btn btn-default">查看试题</a>
                                                 <a href="javascript:void(0);" data-toggle="modal" data-target="#myModal<?php echo $l->id?>" class="btn btn-default">添加子类別</a>
-                                                <a href="<?php echo site_url('category/category_delete');?>?id=<?php echo $l->id; ?>" class="btn btn-danger">删除</a>
+                                                <a onclick="confirm_delete(this)" bhref="<?php echo site_url('category/category_delete');?>?id=<?php echo $l->id; ?>" class="btn btn-danger">删除</a>
                                                 <!-- Modal -->
                                                 <div class="modal fade" id="myModal<?php echo $l->id?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
@@ -142,7 +142,7 @@
                                                                 <input value="<?php echo $l->name;?>" id="input<?php echo $l->id?>" class="_form-control"/>
                                                                 <button onclick="update_category(<?php echo $l->id?>)" id="button<?php echo $l->id?>" class="btn btn-primary">修改名称</button>
                                                                 <a href="<?php echo site_url('paper/papers_list')?>?cid=<?php echo $l->id?>" class="btn btn-default">查看试题</a>
-                                                                <a href="<?php echo site_url('category/category_delete');?>?id=<?php echo $l->id; ?>" class="btn btn-danger">删除</a>
+                                                                <a onclick="confirm_delete(this)" bhref="<?php echo site_url('category/category_delete');?>?id=<?php echo $l->id; ?>" class="btn btn-danger">删除</a>
                                                             </li>
                                                         <?php } ?>
                                                     </ul>

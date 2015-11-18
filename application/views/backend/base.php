@@ -44,6 +44,16 @@
 
     <!-- jQuery -->
     <script src="/assets/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/assets/js/jwplayer.js"></script>
+    <script>
+        var confirm_delete = function(_this) {
+            var result = confirm("是否确认删除操作");
+            if(result){
+                var href = $(_this).attr('bhref');
+                window.location.href=href;
+            }
+        }
+    </script>
 </head>
 
 <body>
