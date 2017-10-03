@@ -491,22 +491,22 @@
                                         <input type="hidden" name="paper_id" value="<?php echo $paper->id;?>" />
                                         <div class="form-group">
                                             <label>题号</label>
-                                            <input name="question_no" value="" type="number" />
+                                            <input name="question_no" value="" type="number" data-validate="required,number"/>
                                         </div>
 
                                         <div class="form-group">
                                             <label>题目</label>
-                                            <textarea class="form-control" rows="3" name="title"></textarea>
+                                            <textarea class="form-control" rows="3" name="title" data-validate="required"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label>分值</label>
-                                            <input name="score" value="" type="number" />
+                                            <input name="score" type="number" value="1" data-validate="required,number"/>
                                         </div>
                                         <div class="form-group">
                                             选项A
-                                            <input value="" name="option1" class="form-control" placeholder="选项描述"/>
+                                            <input value="" name="option1" class="form-control" placeholder="选项描述" data-validate="required" />
                                             选项B
-                                            <input value="" name="option2" class="form-control" placeholder="选项描述"/>
+                                            <input value="" name="option2" class="form-control" placeholder="选项描述" data-validate="required"/>
                                             选项C
                                             <input value="" name="option3" class="form-control" placeholder="选项描述"/>
                                             选项D
@@ -538,9 +538,16 @@
                                             <label>附视频(支援MP4/FLV 视频格式)</label>
                                             <input name="video" type="file">
                                         </div>
-                                        <input type="submit" value="新增题目" class="btn btn-primary">
+                                        <input type="button" value="新增题目" class="btn btn-primary" onclick="confirmSubmit()">
                                     <?php echo form_close(); ?>
                                 </div>
+                                <script>
+                                    function confirmSubmit(){
+                                        $("form").verify();
+                                        $("form").submit();
+                                    }
+
+                                </script>
                             </div>
                         </div>
                     </div>

@@ -44,6 +44,7 @@
 
     <!-- jQuery -->
     <script src="/assets/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/assets/js/verify.notify.js"></script>
     <script src="/assets/js/jwplayer.js"></script>
     <script>
         var confirm_delete = function(_this) {
@@ -54,6 +55,46 @@
             }
         }
     </script>
+    <style type="text/css" id="core-notify">.notifyjs-corner {
+            position: fixed;
+            margin: 5px;
+            z-index: 1050;
+        }
+
+        .notifyjs-corner .notifyjs-wrapper,
+        .notifyjs-corner .notifyjs-container {
+            position: relative;
+            display: block;
+            height: inherit;
+            width: inherit;
+            margin: 3px;
+        }
+
+        .notifyjs-wrapper {
+            z-index: 1;
+            position: absolute;
+            display: inline-block;
+            height: 0;
+            width: 0;
+        }
+
+        .notifyjs-container {
+            display: none;
+            z-index: 1;
+            position: absolute;
+            cursor: pointer;
+        }
+
+        .notifyjs-text {
+            position: relative;
+        }
+
+        .notifyjs-arrow {
+            position: absolute;
+            z-index: 2;
+            width: 0;
+            height: 0;
+        }</style>
 </head>
 
 <body>
